@@ -24,7 +24,9 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    name = models.CharField(max_length=20, null=False, blank=False)
+    username = models.CharField(
+        max_length=20, null=False, blank=False, unique=True, help_text="unduplicated nickname"
+    )
     email = models.EmailField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
     join_date = models.DateTimeField(auto_now_add=True)
