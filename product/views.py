@@ -9,7 +9,8 @@ from product.serializers import ProductSerializer, ProductListSerializer, \
 # Create your views here.
 class ProductViewSet(viewsets.ModelViewSet):
     """
-    지원자 view
+    상품을 등록, 수정, 조회, 삭제를 할 수 있음
+    이때, 권한에 따라 조회만 할 수도 있고, CRUD 를 할 수 있음.
     """
     queryset = Product.objects.all().order_by('name')
     serializer_class = ProductSerializer
