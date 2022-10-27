@@ -40,3 +40,12 @@ class UserLogoutApiView(APIView):
 class UserApiView(APIView):
     def get(self, request):
         return Response(UserSerializer(request.user).data, status=status.HTTP_200_OK)
+
+    def put(self, request):
+        user_serializer = UserSerializer(request.user, data=request.data, partial=True)
+
+        if user_serializer.is_valid():
+            user_serializer.save()
+            return Response({"message": "성공적으로 회원정보를 수정하였습니다."}, status=status.HTTP_200_OK)
+
+        return Response(user_serializer.error, status=status.HTTP_400_BAD_REQUEST)
