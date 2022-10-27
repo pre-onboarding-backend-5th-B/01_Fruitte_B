@@ -5,7 +5,7 @@ from product.serializers import ProductSerializer
 
 
 # Create your views here.
-class ProductViewSet(viewsets.ReadOnlyModelViewSet):
+class ProductViewSet(viewsets.ModelViewSet):
     """
     지원자 view
     """
