@@ -19,12 +19,12 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ['name', 'description', 'thumbnail', 'options']
 
 
-class ProductListSerializer(ProductSerializer):
+class ProductReadOnlySerializer(ProductSerializer):
     class Meta(ProductSerializer.Meta):
         fields = ['name', 'description', 'thumbnail']
 
 
-class ProductDetailSerializer(ProductSerializer):
+class ProductDetailOrWriteSerializer(ProductSerializer):
     class Meta(ProductSerializer.Meta):
         fields = ['name', 'description', 'thumbnail', 'detail_image', 'description']
 
