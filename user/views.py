@@ -35,3 +35,8 @@ class UserLogoutApiView(APIView):
     def post(self, request):
         logout(request)
         return Response({"message": "성공적으로 로그아웃되었습니다."}, status=status.HTTP_200_OK)
+
+
+class UserApiView(APIView):
+    def get(self, request):
+        return Response(UserSerializer(request.user).data, status=status.HTTP_200_OK)
