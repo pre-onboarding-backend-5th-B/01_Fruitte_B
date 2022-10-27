@@ -8,5 +8,5 @@ router.register('', views.ProductViewSet)
 
 urlpatterns = [
     # path('', views.index, name='index'),
-    path('', include(router.urls), name='recruit')
+    path('', include(router.urls), name='product')
 ]
