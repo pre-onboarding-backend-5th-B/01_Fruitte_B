@@ -11,6 +11,8 @@ class ProductOptionSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    options = ProductOptionSerializer(many=True, read_only=True)
+
     class Meta:
         model = Product
         fields = '__all__'
