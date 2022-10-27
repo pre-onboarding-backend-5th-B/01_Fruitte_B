@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 from rest_framework import status
 from rest_framework.views import APIView
@@ -29,3 +29,9 @@ class UserLoginApiView(APIView):
 
         login(request, user)
         return Response({"message": "성공적으로 로그인되었습니다."}, status=status.HTTP_200_OK)
+
+
+class UserLogoutApiView(APIView):
+    def post(self, request):
+        logout(request)
+        return Response({"message": "성공적으로 로그아웃되었습니다."}, status=status.HTTP_200_OK)
