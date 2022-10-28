@@ -10,7 +10,13 @@ from .serializers import CartSerializer, CartItemSerializer
 
 class CartApiView(APIView):
     def get(self, request):
-        pass
+        cart = Cart.objects.get(user=request.user)
+        item_query_set = CartItem.objects.filter(cart_id=cart.id)
+        return Response(
+            CartItemSerializer(item_query_set, many=True).data,
+            status=status.HTTP_200_OK,
+        )
+
 
 class CartItemAddApiView(APIView):
     def post(self, request, product_id, option_id):
