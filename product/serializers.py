@@ -1,24 +1,29 @@
 from rest_framework import serializers
 
-from .models import Product
+from .models import Product, ProductOption
+
+
+class ProductOptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductOption
+        read_only_fields = ('id', 'product',)
+        fields = ['option_detail', 'price', 'amount']
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    options = ProductOptionSerializer(many=True, read_only=True)
+
     class Meta:
         model = Product
-        fields = '__all__'
+        read_only_fields = ['id']
+        fields = ['name', 'description', 'thumbnail', 'options']
 
 
-class ProductListSerializer(ProductSerializer):
+class ProductReadOnlySerializer(ProductSerializer):
     class Meta(ProductSerializer.Meta):
-        fields = ['name', 'description', 'thumbnail']
+        pass
 
 
-class ProductDetailSerializer(ProductSerializer):
+class ProductDetailOrWriteSerializer(ProductSerializer):
     class Meta(ProductSerializer.Meta):
-        fields = ['name', 'description', 'thumbnail', 'detail_image', 'description']
-
-
-class ProductWriteSerializer(serializers.ModelSerializer):
-    class Meta(ProductSerializer.Meta):
-        fields = ['name', 'description', 'thumbnail', 'detail_image']
+        ProductSerializer.Meta.fields += ['detail_image', 'description']
