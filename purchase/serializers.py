@@ -9,9 +9,10 @@ class PayMethodSerializer(serializers.ModelSerializer):
     - 카드
     - 현금
     """
+
     class Meta:
         model = PayMethod
-        fields = ['pay_method']
+        fields = '__all__'
 
 
 class DeliveryStatusSerializer(serializers.ModelSerializer):
@@ -23,8 +24,7 @@ class DeliveryStatusSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DeliveryStatus
-        fields = ['delivery_status']
-
+        fields = '__all__'
 
 class PurchasedListSerializer(serializers.ModelSerializer):
     """
@@ -33,4 +33,4 @@ class PurchasedListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PurchasedList
-        fields = ['pay_method', 'delivery_status', 'purchased_at', 'is_present']
+        fields = '__all__'
