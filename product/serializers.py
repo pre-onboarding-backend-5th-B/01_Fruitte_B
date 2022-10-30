@@ -4,10 +4,11 @@ from .models import Product, ProductOption
 
 
 class ProductOptionSerializer(serializers.ModelSerializer):
+    product_name = serializers.ReadOnlyField(source='product.name')
+
     class Meta:
         model = ProductOption
-        read_only_fields = ('id', 'product',)
-        fields = ['option_detail', 'price', 'amount']
+        fields = ['id', 'product_name', 'option_detail', 'price', 'amount']
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -15,8 +16,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        read_only_fields = ['id']
-        fields = ['name', 'description', 'thumbnail', 'options']
+        fields = ['id', 'name', 'description', 'thumbnail', 'options']
 
 
 class ProductReadOnlySerializer(ProductSerializer):
