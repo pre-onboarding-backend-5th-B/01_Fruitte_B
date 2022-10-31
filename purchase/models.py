@@ -1,7 +1,7 @@
 from django.db import models
 
 from cart.models import Cart
-from product.models import Product
+from product.models import Product, ProductOption
 from user.models import User
 
 
@@ -31,8 +31,7 @@ class PurchasedList(models.Model):
     """
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     cart = models.OneToOneField(Cart, on_delete=models.CASCADE)  # cart 당 하나의 구매 내역만 있어야 함
-    # product = models.ForeignKey(Product, on_delete=models.CASCADE)  # cart_item 에 정보가 있음
-    # pay_method = models.ForeignKey("PayMethod", on_delete=models.CASCADE)  # cart_item 에 정보가 있음
+    pay_method = models.ForeignKey("PayMethod", on_delete=models.CASCADE)  # cart_item 에 정보가 있음
     delivery_status = models.ForeignKey("DeliveryStatus", on_delete=models.CASCADE)
     purchased_at = models.DateTimeField(auto_now_add=True)
     is_present = models.BooleanField(default=True)
