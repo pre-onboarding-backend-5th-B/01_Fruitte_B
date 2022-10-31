@@ -18,4 +18,4 @@ class DeliveryStatusViewSet(ModelViewSet):
 
 class PurchaseViewSet(ModelViewSet):
     serializer_class = PurchasedListSerializer
-    queryset = PurchasedList.objects.all().order_by('product__name')
+    queryset = PurchasedList.objects.all()
