@@ -27,6 +27,7 @@ class DeliveryStatusSerializer(serializers.ModelSerializer):
         model = DeliveryStatus
         fields = '__all__'
 
+
 class PurchasedListSerializer(serializers.ModelSerializer):
     """
     결제 수단
