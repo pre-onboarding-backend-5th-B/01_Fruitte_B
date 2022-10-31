@@ -1,3 +1,5 @@
+from urllib import response
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -10,12 +12,49 @@ from .serializers import CartSerializer, CartItemSerializer
 
 class CartApiView(APIView):
     def get(self, request):
+        # 카트 아이템 리스트
         cart = Cart.objects.get(user=request.user)
         item_query_set = CartItem.objects.filter(cart_id=cart.id)
         return Response(
             CartItemSerializer(item_query_set, many=True).data,
             status=status.HTTP_200_OK,
         )
+
+
+class CartEditApiView(APIView):
+    def get(self, request, item_id):
+        cart_item = get_object_or_404(CartItem, id=item_id)
+        product_option = ProductOption.objects.filter(product=cart_item.product.id)
+        product_option_list = list()
+
+        for obj in product_option:
+            product_option_list.append(obj.id)
+        print(product_option_list)
+        serializer = CartItemSerializer(cart_item).data
+        serializer["option available"] = product_option_list
+
+        return Response(serializer, status=status.HTTP_200_OK)
+
+    def put(self, request, item_id):
+        # 필수 기능 : 옵션 변경, 수량 변경
+        cart_item = get_object_or_404(CartItem, id=item_id)
+        product_option = ProductOption.objects.filter(product=cart_item.product.id)
+        product_option_list = list()
+
+        for obj in product_option:
+            product_option_list.append(obj.id)
+
+        serializer = CartItemSerializer(cart_item, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, sataus=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, item_id):
+        cart_item = get_object_or_404(CartItem, id=item_id)
+        cart_item.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class CartItemAddApiView(APIView):
