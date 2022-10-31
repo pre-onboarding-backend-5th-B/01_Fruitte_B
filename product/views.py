@@ -43,7 +43,7 @@ class ProductOptionViewSet(viewsets.ModelViewSet):
         return super().perform_create(serializer)
 
     def get_queryset(self):
-        return ProductOption.objects.filter(product_id=self.kwargs['product_id'])
+        return ProductOption.objects.select_related('product').filter(product_id=self.kwargs['product_id'])
 
     def get_permissions(self):
         self.permission_classes = [IsAdminUser]
