@@ -1,3 +1,4 @@
+from django.core.validators import MinValueValidator
 from django.db import models
 
 
@@ -27,7 +28,9 @@ class ProductOption(models.Model):
     option_detail = models.CharField(max_length=50,
                                      help_text='상품에 대한 수량 혹은 무게에 대한 설명을 입력하세요.')
     price = models.IntegerField(help_text='가격을 입력하세요.')
-    amount = models.IntegerField(blank=True, help_text='재고량을 입력하세요.')
+    amount = models.IntegerField(blank=True,
+                                 validators=[MinValueValidator(0)],
+                                 help_text='재고량을 입력하세요.')
 
     def __str__(self):
         return f'{self.product.name} - {self.option_detail}1'
