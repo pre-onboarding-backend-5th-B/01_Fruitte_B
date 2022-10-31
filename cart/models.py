@@ -8,8 +8,7 @@ class Cart(models.Model):
 
 
 class CartItem(models.Model):
-    cart_id = models.ForeignKey(Cart, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     option = models.ForeignKey(ProductOption, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
     is_present = models.BooleanField(default=True)
