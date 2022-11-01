@@ -24,12 +24,13 @@ class CartApiView(APIView):
 class CartEditApiView(APIView):
     def get(self, request, item_id):
         cart_item = get_object_or_404(CartItem, id=item_id)
-        product_option = ProductOption.objects.filter(product=cart_item.option.product.id)
-        product_option_list = [dict(x) for x in ProductOptionSerializer(product_option, many=True).data]
+        product_option = ProductOption.objects.filter(
+            product=cart_item.option.product.id
+        )
+        product_option_list = [
+            dict(x) for x in ProductOptionSerializer(product_option, many=True).data
+        ]
 
-        # for obj in product_option:
-        #     product_option_list.append(obj.id)
-        
         serializer = CartItemSerializer(cart_item).data
         serializer["option available"] = product_option_list
 
@@ -38,7 +39,7 @@ class CartEditApiView(APIView):
     def put(self, request, item_id):
         # 필수 기능 : 옵션 변경, 수량 변경
         cart_item = get_object_or_404(CartItem, id=item_id)
-        
+
         serializer = CartItemSerializer(cart_item, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
